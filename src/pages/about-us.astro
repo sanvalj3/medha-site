@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Enquire from '../components/Enquire.astro';
+import Icon from '../components/Icon.astro';
+import { u } from '../lib/url';
+import { whyChoose, allProgrammes, trainers } from '../data/site';
+import team from '../assets/site/team.webp';
+import classroom from '../assets/events/opening-8.jpeg';
+import suresh from '../assets/people/g-suresh.jpeg';
+import barath from '../assets/people/ts-barath.jpeg';
+---
+<Base title="About Us" description="Medha IT Technologies is a software training institute in Marathahalli, Bengaluru helping students and professionals build IT careers with practical training." crumbs={[{ label: 'About us' }]} schema={[{ '@type': 'AboutPage', name: 'About Medha IT Technologies' }]}>
+  <PageHero title="About Medha IT Technologies" eyebrow="About us" crumbs={[{ label: 'About us' }]}
+    lede="A software training institute committed to empowering students, freshers and professionals with industry-relevant skills and practical knowledge." />
+
+  <section class="band bg-white">
+    <div class="wrap split">
+      <div class="split-copy">
+        <span class="eyebrow">Who we are</span>
+        <h2>Bridging the gap between education and employment</h2>
+        <p class="lede">Our goal is to bridge the gap between academic education and real-world industry requirements through quality training, live projects and career-focused learning programs.</p>
+        <p style="color:var(--ink-2)">We offer professional training in SAP, Java Full Stack, Python Full Stack, Software Testing, AWS &amp; DevOps, Data Science, Artificial Intelligence, Digital Marketing, Salesforce, Power BI and other emerging technologies. With experienced trainers, internships, project-based learning and placement assistance, we help learners build successful careers in the IT industry.</p>
+        <p style="color:var(--ink-2)">Our trainers provide hands-on learning, real-time project exposure, interview preparation, certification guidance and dedicated placement support. Thousands of students have transformed their careers with Medha IT Technologies.</p>
+      </div>
+      <div class="photo"><Image src={team} alt="Students working on a project with their mentor" widths={[480, 760, 1000]} sizes="(max-width: 960px) 92vw, 540px" /></div>
+    </div>
+  </section>
+
+
+  <section class="band bg-blue">
+    <div class="wrap grid-2">
+      <div class="card"><span class="ic"><Icon name="target" /></span><h3 style="font-family:var(--f-display);font-weight:400;font-size:1.6rem">Our vision</h3>
+        <p>To become a trusted leader in technology education by empowering students, freshers and professionals with industry-relevant skills, practical knowledge and career opportunities. We strive to bridge the gap between academic learning and industry expectations while shaping the future of skilled IT professionals.</p></div>
+      <div class="card"><span class="ic"><Icon name="star" /></span><h3 style="font-family:var(--f-display);font-weight:400;font-size:1.6rem">Our mission</h3>
+        <p>To deliver high-quality software training through expert mentorship, hands-on learning, real-time projects, internships and placement assistance, helping learners gain confidence, develop technical expertise and build successful careers in a fast-changing technology landscape.</p></div>
+    </div>
+  </section>
+
+  <section class="band bg-white">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Leadership</span><h2>Meet our leadership</h2><p class="lede">Driven by vision, powered by innovation, committed to student success.</p></div></div>
+      <div class="grid-2">
+        <div class="leader"><Image src={suresh} alt="G Suresh" width={220} height={220} fit="cover" position="top" /><div><span class="role">Founder &amp; Managing Director</span><h3>G Suresh</h3>
+          <p>A visionary leader guiding Medha IT Technologies with a strong commitment to practical learning, innovation and student career success. His vision is an institute where every learner gains industry-ready skills and meaningful career opportunities.</p></div></div>
+        <div class="leader"><Image src={barath} alt="T S Barath" width={220} height={220} fit="cover" position="top" /><div><span class="role">Co-Founder &amp; Managing Director</span><h3>T S Barath</h3>
+          <p>A strategic operations leader who makes sure every student receives quality education, structured learning, professional mentorship and continuous support from enrollment to placement.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band bg-mint">
+    <div class="wrap split">
+      <div class="photo"><Image src={classroom} alt="Classroom at Medha IT Technologies, Marathahalli" widths={[480, 760, 1000]} sizes="(max-width: 960px) 92vw, 540px" /></div>
+      <div class="split-copy">
+        <span class="eyebrow">Why choose Medha</span>
+        <h2>Learn from industry expert trainers</h2>
+        <p class="lede">Our trainers bring years of real-world experience into the classroom, with practical learning, live projects and career-focused mentoring.</p>
+        <ul class="ticks" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 20px">{whyChoose.map((w) => <li>{w}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band bg-blue">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Our trainers</span><h2>Expertise across SAP, development and data</h2></div></div>
+      <div class="grid-3">{trainers.map((t) => <div class="card trainer"><span class="code">{t.code}</span><h3>{t.title}</h3><p>{t.text}</p><ul class="mini-tags">{t.tags.map((x) => <li>{x}</li>)}</ul></div>)}</div>
+    </div>
+  </section>
+
+  <section class="band bg-white">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Programs</span><h2>Medha IT Technologies courses</h2><p class="lede">Industry-focused programs for students, freshers, non-IT professionals and experienced candidates.</p></div><a class="btn btn-ghost" href={u('courses/')}>Browse courses</a></div>
+      <ul class="roles">{allProgrammes.map((p) => <li>{p}</li>)}</ul>
+    </div>
+  </section>
+
+  <Enquire id="aboutEnq" title="Join Medha IT Technologies" />
+</Base>

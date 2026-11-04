@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CourseCard from '../components/CourseCard.astro';
+import Enquire from '../components/Enquire.astro';
+import Icon from '../components/Icon.astro';
+import { u } from '../lib/url';
+import { courses, contact, type Course } from '../data/site';
+
+export function getStaticPaths() {
+  return courses.map((c) => ({ params: { course: c.slug }, props: { c } }));
+}
+const { c } = Astro.props as { c: Course };
+const [intro, second, ...rest] = c.paras;
+const related = courses.filter((x) => x.cat === c.cat && x.slug !== c.slug).slice(0, 3);
+const more = related.length < 3 ? [...related, ...courses.filter((x) => x.cat !== c.cat && x.slug !== c.slug).slice(0, 3 - related.length)] : related;
+const pageUrl = new URL(u(c.slug + '/'), Astro.site).href;
+const schema = [{
+  '@type': 'Course', '@id': pageUrl + '#course', name: c.title, description: intro, url: pageUrl, inLanguage: 'en-IN',
+  provider: { '@type': 'EducationalOrganization', name: 'Medha IT Technologies', sameAs: new URL(u(''), Astro.site).href },
+  teaches: c.features.join(', '), educationalCredentialAwarded: 'Course completion certificate',
+  ...(c.duration ? { timeRequired: 'P' + Math.round(parseFloat(c.duration) * 30) + 'D' } : {}),
+  hasCourseInstance: [
+    { '@type': 'CourseInstance', courseMode: 'Onsite', location: { '@type': 'Place', name: 'Medha IT Technologies', address: 'Marathahalli, Bengaluru, Karnataka, India' } },
+    { '@type': 'CourseInstance', courseMode: 'Online' },
+  ],
+  occupationalCredentialAwarded: c.roles.slice(0, 5).join(', ') || undefined,
+}];
+const callNo = c.phone && c.phone.replace(/\s/g, '') !== contact.phone ? c.phone : contact.phoneLabel;
+---
+<Base title={c.title} description={intro.slice(0, 155).replace(/\s+\S*$/, '') + '…'} course={c.demo} crumbs={[{ label: 'Courses', href: 'courses/' }, { label: c.title }]} schema={schema}>
+  <PageHero title={c.title} eyebrow={c.code === 'SAP' ? 'SAP training' : 'Course'} crumbs={[{ label: 'Courses', href: 'courses/' }, { label: c.title }]} lede={intro}>
+    <div class="cta-row" style="margin-top:6px">
+      <button class="btn btn-primary" type="button" data-demo={c.demo}>Book a free demo <Icon name="arrow" /></button>
+      <a class="btn btn-ghost" style="background:#FFFFFF" href={`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(`Hello Medha IT Technologies, I would like details about ${c.title}.`)}`} target="_blank" rel="noopener">Ask on WhatsApp</a>
+    </div>
+  </PageHero>
+
+  <section class="band bg-white">
+    <div class="wrap course-layout">
+      <div style="display:grid;gap:40px;min-width:0">
+        <div class="prose">
+          <h2>About this course</h2>
+          <p>{second}</p>
+        </div>
+
+        <div>
+          <h2 style="font-size:1.7rem;margin-bottom:18px">What you get</h2>
+          <ul class="ticks" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 24px">{c.features.map((f) => <li>{f}</li>)}</ul>
+        </div>
+
+        {c.roles.length > 0 && (
+          <div style="padding:24px;border-radius:var(--r);background:var(--tint-blue)">
+            <h2 style="font-size:1.5rem;margin-bottom:6px">Career opportunities</h2>
+            <p style="color:var(--ink-2);margin-bottom:16px">Roles our learners prepare for after this course:</p>
+            <ul class="roles">{c.roles.map((r) => <li>{r}</li>)}</ul>
+          </div>
+        )}
+
+        <details class="more">
+          <summary><span class="when-closed">Read the full course details ↓</span><span class="when-open">Show less ↑</span></summary>
+          <div class="prose">{rest.filter((p) => !/^Career opportunities after/i.test(p)).map((p) => <p>{p}</p>)}</div>
+        </details>
+      </div>
+
+      <aside class="aside">
+        <div class="card">
+          <span class={`code c-${c.cat}`} style="width:max-content">{c.code}</span>
+          <h3 style="font-size:1.15rem">{c.title}</h3>
+          <dl class="facts">
+            {c.duration && <><dt>Duration</dt><dd>{c.duration}</dd></>}
+            <dt>Mode</dt><dd>Online &amp; classroom</dd>
+            <dt>Batches</dt><dd>Weekday &amp; weekend</dd>
+            <dt>Includes</dt><dd>Live projects, certificate</dd>
+            <dt>Support</dt><dd>{c.highlight}</dd>
+          </dl>
+          <button class="btn btn-primary btn-block" type="button" data-demo={c.demo}>Book free demo class</button>
+          <a class="btn btn-wa btn-block" href={`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(`Hello Medha IT Technologies, I would like details about ${c.title}.`)}`} target="_blank" rel="noopener"><Icon name="whatsapp" /> WhatsApp us</a>
+        </div>
+        <div class="card" style="background:var(--tint-teal);border:0">
+          <h3>Free career guidance</h3>
+          <p>Call us for course details, fees and batch timings.</p>
+          <a href={`tel:${callNo.replace(/\s/g, '')}`} style="font-family:var(--f-mono);font-weight:600;font-size:1.15rem;text-decoration:none;color:var(--navy)">{callNo}</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="band bg-blue">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">You may also like</span><h2>Related courses</h2></div><a class="btn btn-ghost" style="background:#FFFFFF" href={u('courses/')}>All courses</a></div>
+      <div class="courses">{more.map((x) => <CourseCard c={x} />)}</div>
+    </div>
+  </section>
+
+  <Enquire id="courseEnq" title={`Book a free ${c.title.replace(/ Training$/, '')} demo`} />
+</Base>

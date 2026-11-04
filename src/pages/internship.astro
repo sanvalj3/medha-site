@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Enquire from '../components/Enquire.astro';
+import Icon from '../components/Icon.astro';
+import { u } from '../lib/url';
+import { internshipBenefits } from '../data/site';
+import internshipImg from '../assets/site/chatgpt-image.png';
+const icons = ['lab', 'users', 'growth', 'link'];
+const tracks = [
+  { name: 'SAP (FICO, MM, SD)', slug: 'sap-all-modules-training' },
+  { name: 'Java Full Stack', slug: 'java-full-stack' },
+  { name: 'Python Full Stack', slug: 'python-full-stack-training' },
+  { name: 'Data Science & AI', slug: 'data-science-training' },
+  { name: 'Data Analytics & Power BI', slug: 'data-analytics-training-2' },
+  { name: 'AWS & DevOps', slug: 'aws-devops-training' },
+  { name: 'Software Testing', slug: 'software-testing-training' },
+  { name: 'Digital Marketing', slug: 'digital-marketing-training' },
+];
+---
+<Base title="Internship Program" description="Internship program at Medha IT Technologies, Bengaluru: live projects, expert mentorship, skill development and a certificate, with placement support." crumbs={[{ label: 'Internship' }]}>
+  <PageHero title="Internship program" eyebrow="Internship" crumbs={[{ label: 'Internship' }]}
+    lede="Unlock your potential with hands-on experience: work on live projects, learn from industry experts and build the skills required for a successful IT career.">
+    <div class="cta-row" style="margin-top:6px"><button class="btn btn-primary" type="button" data-demo>Apply / book a free demo <Icon name="arrow" /></button></div>
+  </PageHero>
+
+  <section class="band bg-white">
+    <div class="wrap split">
+      <div class="split-copy">
+        <span class="eyebrow">What you get</span>
+        <h2>Real projects, real mentors, real experience</h2>
+        <div class="grid-2">{internshipBenefits.map((b, i) => <div class="card" style="background:var(--bg)"><span class="ic"><Icon name={icons[i]} /></span><h3>{b.title}</h3><p>{b.text}</p></div>)}</div>
+      </div>
+      <div class="photo"><Image src={internshipImg} alt="Interns working together on a project" widths={[480, 760, 1000]} sizes="(max-width: 960px) 92vw, 540px" /></div>
+    </div>
+  </section>
+
+  <section class="band bg-blue">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">How it works</span><h2>Your internship, step by step</h2></div></div>
+      <ol class="journey">
+        <li class="step"><span class="step-n"><b>01</b></span><h3>Choose a track</h3><p>Pick the technology you want to work in, with help from our counsellors.</p></li>
+        <li class="step"><span class="step-n"><b>02</b></span><h3>Live project</h3><p>Join a project team and work on real requirements, tools and deadlines.</p></li>
+        <li class="step"><span class="step-n"><b>03</b></span><h3>Mentor reviews</h3><p>Get regular feedback from industry mentors on your work and skills.</p></li>
+        <li class="step"><span class="step-n"><b>04</b></span><h3>Certificate &amp; placement</h3><p>Earn your certificate and move into interview preparation and placement support.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band bg-mint">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Internship tracks</span><h2>Available in these technologies</h2></div></div>
+      <div class="grid-4">{tracks.map((t) => <a class="card" style="text-decoration:none" href={u(t.slug + '/')}><h3>{t.name}</h3><span class="link">View course →</span></a>)}</div>
+    </div>
+  </section>
+
+  <Enquire id="internEnq" title="Start your internship" text="Tell us which track you're interested in and we'll share the next internship batch details on WhatsApp." />
+</Base>

@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import EventImg from '../../components/EventImg.astro';
+import EventAside from '../../components/EventAside.astro';
+import Enquire from '../../components/Enquire.astro';
+import { u } from '../../lib/url';
+const artUrl = new URL(u('events/independence-day-celebration/'), Astro.site).href;
+const schema = [{ '@type': 'Article', headline: "80th Independence Day Celebration at Medha IT Technologies", datePublished: '2026-08-15', dateModified: '2026-08-15', mainEntityOfPage: artUrl,
+  author: { '@type': 'Organization', name: 'Medha IT Technologies' }, publisher: { '@type': 'Organization', name: 'Medha IT Technologies' } }];
+---
+<Base title="80th Independence Day Celebration" description="Medha IT Technologies celebrated India's 80th Independence Day on 15 August 2026 with patriotism, unity, tricolour decorations and team spirit." type="article" published="2026-08-15" crumbs={[{ label: 'Events', href: 'events/' }, { label: 'Independence Day' }]} schema={schema}>
+  <PageHero title="80th Independence Day Celebration at Medha IT Technologies" eyebrow="Institute event" crumbs={[{ label: 'Events', href: 'events/' }, { label: 'Independence Day' }]}>
+    <div class="meta"><time datetime="2026-08-15">15 August 2026</time><span>Medha IT Technologies</span><span>6 min read</span></div>
+  </PageHero>
+
+  <section class="band bg-white">
+    <div class="wrap course-layout">
+      <article class="prose">
+        <figure><EventImg src="events/independence-day-1.jpeg" alt="Medha IT Technologies reception decorated with tricolour balloons and flags" wide eager /><figcaption>Proud moments from the 80th Independence Day Celebration at Medha IT Technologies.</figcaption></figure>
+        <h2>Introduction</h2>
+        <p><b>Medha IT Technologies</b> proudly celebrated the <b>80th Independence Day</b> on 15 August 2026 with patriotism, unity, pride and deep respect for the nation. The celebration brought together students, staff and institute members to honour India's great national occasion.</p>
+        <p>The event reflected the values of togetherness, responsibility, discipline and growth: a reminder that education, skill development and self-confidence play an important role in building a stronger future.</p>
+
+        <h2>The celebration</h2>
+        <p>The institute was decorated with tricolour balloons, Indian flags, patriotic posters and Medha IT Technologies branding, creating a proud and positive environment where everyone could feel the spirit of the nation. The tricolour theme added a patriotic touch while keeping the atmosphere professional and clean.</p>
+        <div class="facts-grid">
+          <div><b>Event date</b><span>Celebrated on 15 August 2026 with pride and unity.</span></div>
+          <div><b>Organisation</b><span>Hosted by Medha IT Technologies.</span></div>
+          <div><b>Team spirit</b><span>Students and staff came together for the celebration.</span></div>
+          <div><b>Patriotic theme</b><span>Tricolour decorations, flags, balloons and memorable moments.</span></div>
+        </div>
+
+        <h2>Togetherness and team spirit</h2>
+        <p>Students, staff and the Medha team came together in a spirit of unity and happiness. Everyone took part with enthusiasm, making the occasion meaningful and memorable. Celebrations like this strengthen team bonding and remind students that success is built through unity, discipline, consistency and shared purpose.</p>
+        <figure><EventImg src="events/independence-day-team.png" alt="The Medha IT Technologies team at the Independence Day celebration" wide /><figcaption>The Medha IT Technologies team celebrating unity, patriotism and togetherness.</figcaption></figure>
+
+        <h2>Celebration moments</h2>
+        <p>Team members gathered around the decorated institute space, with Indian flags, tricolour balloons and the Medha backdrop adding to the beauty of the occasion. The participation, smiles and togetherness reflected the institute's culture of respect, teamwork and shared values.</p>
+        <figure><EventImg src="events/independence-day-lounge.jpeg" alt="Student lounge decorated in tricolour balloons and flags" wide /><figcaption>Medha IT Technologies beautifully decorated in tricolour for the 80th Independence Day.</figcaption></figure>
+
+        <h2>Decor and atmosphere</h2>
+        <p>The institute was filled with tricolour decorations, Indian flags, orange, white and green balloons and patriotic details that created a joyful and respectful environment, while keeping the professional look of the institute.</p>
+        <figure><EventImg src="events/independence-day-4.png" alt="Office area with tricolour balloons and Indian flags" wide /><figcaption>Tricolour decorations bringing patriotism to every corner of Medha IT Technologies.</figcaption></figure>
+        <h3>Behind the celebration setup</h3>
+        <p>Every decoration, flag, balloon and seating arrangement was carefully planned to create a respectful, patriotic and welcoming atmosphere, reflecting the dedication of the Medha team.</p>
+        <figure><EventImg src="events/independence-day-5.png" alt="Cabin decorated with the Indian flag and tricolour balloons" wide /><figcaption>Proudly decorated spaces for a proud celebration.</figcaption></figure>
+
+        <blockquote>Freedom gives us opportunity. Education gives us direction. Skills give us confidence to build a better India.</blockquote>
+
+        <h2>The spirit of independence</h2>
+        <p>Independence Day is a reminder of freedom, responsibility, courage and progress. True independence also means having the confidence to learn, grow, work and build a successful future. For students and professionals, skill development, innovation, discipline and continuous learning are important steps toward personal and national development.</p>
+        <h2>Building futures</h2>
+        <p>Through training programs, internships, real-time projects, resume support, mock interviews and career guidance, Medha IT Technologies helps learners become self-reliant, skilled and career-ready, and contribute to the growth of the nation.</p>
+        <h2>A memorable celebration</h2>
+        <p>The 80th Independence Day Celebration was a proud and memorable day for the entire Medha family, reflecting patriotism, togetherness, respect for the nation and a shared commitment to building brighter futures through education.</p>
+      </article>
+      <EventAside current="independence-day-celebration" />
+    </div>
+  </section>
+  <Enquire id="evEnq" />
+</Base>

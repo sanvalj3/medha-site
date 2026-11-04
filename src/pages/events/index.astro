@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import EventImg from '../../components/EventImg.astro';
+import Enquire from '../../components/Enquire.astro';
+import { u } from '../../lib/url';
+import { events } from '../../data/events';
+---
+<Base title="Events" description="Events and celebrations at Medha IT Technologies, Bengaluru: the grand opening ceremony, Independence Day celebration and more." crumbs={[{ label: 'Events' }]}>
+  <PageHero title="Events & news" eyebrow="Events" crumbs={[{ label: 'Events' }]}
+    lede="Moments from life at Medha IT Technologies: ceremonies, celebrations, workshops and placement drives." />
+  <section class="band bg-blue">
+    <div class="wrap grid-2">
+      {events.map((e, i) => (
+        <a class="event-card" href={u(`events/${e.slug}/`)}>
+          <div class="thumb"><EventImg src={e.image} alt={e.short} wide eager={i === 0} /></div>
+          <div class="body">
+            <div class="meta"><span>{e.category}</span><time datetime={e.iso}>{e.date}</time><span>{e.read}</span></div>
+            <h3>{e.title}</h3>
+            <p>{e.excerpt}</p>
+            <span class="link">Read more →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+  <Enquire id="eventsEnq" />
+</Base>

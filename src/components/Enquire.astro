@@ -1,0 +1,22 @@
+---
+import DemoForm from './DemoForm.astro';
+import { contact } from '../data/site';
+const { id = 'enq', title = 'Book your free demo class', text = 'Fill in your details and our career experts will reach out to you shortly on WhatsApp.' } = Astro.props;
+---
+<section class="cta-band" id="enquire">
+  <div class="wrap">
+    <div class="enquire">
+      <div class="copy">
+        <span class="eyebrow" style="color:#BFF0D0">Get started today</span>
+        <h2>{title}</h2>
+        <p>{text}</p>
+        <ul class="ticks"><li>Meet your trainer and see the syllabus</li><li>Pick the right course and batch</li><li>No cost, no commitment</li></ul>
+        <p style="font-weight:600">Or call / WhatsApp <a href={`tel:${contact.phone}`} style="color:#FFFFFF">{contact.phoneLabel}</a></p>
+      </div>
+      <form class="form-card" data-demo-form>
+        <h3>Request a free demo</h3>
+        <DemoForm id={id} button="Submit request" />
+      </form>
+    </div>
+  </div>
+</section>

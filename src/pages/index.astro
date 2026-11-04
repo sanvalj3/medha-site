@@ -1,0 +1,192 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import CourseCard from '../components/CourseCard.astro';
+import CourseFilters from '../components/CourseFilters.astro';
+import StudentCard from '../components/StudentCard.astro';
+import Enquire from '../components/Enquire.astro';
+import Faq from '../components/Faq.astro';
+import { u } from '../lib/url';
+import { img } from '../lib/images';
+import { courses, homeCourses, students, testimonials, trainingModes, facilities, trainers, internshipBenefits, batches, faqs } from '../data/site';
+import classroom from '../assets/site/classroom.webp';
+import internshipImg from '../assets/site/chatgpt-image.png';
+import suresh from '../assets/people/g-suresh.jpeg';
+import barath from '../assets/people/ts-barath.jpeg';
+
+const list = homeCourses.map((s) => courses.find((c) => c.slug === s)!);
+const top = students[0];
+const schema = [
+  { '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+const facIcons = ['lab', 'users', 'mic', 'book', 'link', 'growth'];
+const benIcons = ['lab', 'users', 'growth', 'link'];
+const stackPhotos = ['Oleti-Pavan-Kumar.jpeg', 'Komali.png', 'Hemalatha.png', 'K-Arun-Kumar.jpeg'].map((p) => img('students/' + p)!);
+---
+<Base title="Medha IT Technologies | IT & SAP Training in Bengaluru"
+  description="IT & SAP training institute in Marathahalli, Bengaluru. Java, Python, Data Science, AI, AWS & DevOps, Power BI and more, with live projects and placements."
+  autoDemo schema={schema}>
+
+  <section class="hero swoosh-bg">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="pill"><i>New batches</i> Online &amp; classroom · Marathahalli, Bengaluru</span>
+        <h1>Learn the skills companies hire for, and <span class="hl">get placed.<svg class="swoosh" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 14 C 60 4, 140 4, 198 10" fill="none" stroke="#D99A00" stroke-width="5" stroke-linecap="round"/></svg><svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z" fill="#D99A00"/></svg></span></h1>
+        <p class="lede">Industry-ready training in SAP, Java and Python Full Stack, Data Science, AI, AWS &amp; DevOps and more, with live projects, internships, certification and placement support from your first class to your offer letter.</p>
+        <div class="cta-row">
+          <button class="btn btn-primary" type="button" data-demo>Book a free demo class <Icon name="arrow" /></button>
+          <a class="btn btn-ghost" href={u('courses/')}>Explore courses</a>
+        </div>
+        <ul class="tags" aria-label="Popular tracks">
+          <li>SAP FICO · MM · SD</li><li>Java Full Stack</li><li>Python</li><li>Data Science &amp; AI</li><li>AWS &amp; DevOps</li>
+        </ul>
+      </div>
+      <div class="hero-visual">
+        <div class="photo"><Image src={classroom} alt="Trainer teaching a classroom batch" widths={[480, 760, 1000]} sizes="(max-width: 960px) 92vw, 540px" loading="eager" fetchpriority="high" /></div>
+        <div class="float bl">
+          <Image class="avatar" src={img('students/' + top.photo)!} alt={top.name} width={92} height={92} fit="cover" position="top" />
+          <div><small>Highest package</small><span class="lpa">{top.lpa} LPA</span><strong>{top.name} · {top.role}, {top.company}</strong></div>
+        </div>
+        <div class="float tr">
+          <div class="stack">{stackPhotos.map((p) => <Image src={p} alt="" width={60} height={60} fit="cover" position="top" />)}</div>
+          <div><strong>Our students work at</strong><small>Deloitte · KPMG · PwC</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="band bg-blue" id="courses">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="eyebrow">Our courses</span><h2>Industry-ready programs with internship and placement support</h2></div>
+        <CourseFilters target="homeCourses" />
+      </div>
+      <div class="courses" id="homeCourses">{list.map((c) => <CourseCard c={c} />)}</div>
+      <div style="display:flex;justify-content:center;margin-top:28px"><a class="btn btn-ghost" href={u('courses/')} style="background:#FFFFFF">View all 14 courses</a></div>
+
+      <div class="sec-head" style="margin-top:72px">
+        <div><span class="eyebrow">Training modes</span><h2>Learn the way that fits your schedule</h2></div>
+      </div>
+      <div class="grid-4">
+        {trainingModes.map((m) => (
+          <div class="card">
+            <span class="ic"><Icon name={m.icon} /></span>
+            <h3>{m.title}</h3><p>{m.text}</p>
+            <ul class="mini-tags">{m.tags.map((t) => <li>{t}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="band bg-white" id="internship">
+    <div class="wrap split">
+      <div class="split-copy">
+        <span class="eyebrow">Internship program</span>
+        <h2>Gain real experience before your first job</h2>
+        <p class="lede">Work on live projects, learn from industry experts and build the skills you need for a successful IT career.</p>
+        <div class="grid-2">
+          {internshipBenefits.map((b, i) => (
+            <div class="card" style="background:var(--bg)"><span class="ic"><Icon name={benIcons[i]} /></span><h3>{b.title}</h3><p>{b.text}</p></div>
+          ))}
+        </div>
+        <div class="cta-row"><a class="btn btn-primary" href={u('internship/')}>About the internship</a><button class="btn btn-ghost" type="button" data-demo>Book free demo</button></div>
+      </div>
+      <div class="photo"><Image src={internshipImg} alt="Interns working together on a project" widths={[480, 760, 1000]} sizes="(max-width: 960px) 92vw, 540px" /></div>
+    </div>
+  </section>
+
+  <section class="band bg-mint" id="batches">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="eyebrow">Upcoming batches</span><h2>New batches start every month</h2><p class="lede">Weekday and weekend batches, online and in the classroom. Ask us for the next start date.</p></div>
+      </div>
+      <div class="grid-4">
+        {batches.map((b) => (
+          <div class="batch">
+            <span class="badge">New batch</span>
+            <h3><a href={u(b.slug + '/')} style="text-decoration:none">{b.course}</a></h3>
+            <dl><dt>Mode</dt><dd>{b.mode}</dd><dt>Starts</dt><dd>Enquire for date</dd></dl>
+            <button class="btn btn-primary btn-sm" type="button" data-demo={b.demo}>Enquire now</button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="band bg-navy" id="placements">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="eyebrow">Placements</span><h2>Our students work at companies you know</h2><p class="lede">Packages in LPA (lakhs per annum), as reported by our placed students.</p></div>
+        <a class="btn btn-ghost" href={u('placements/')}>View all placed students</a>
+      </div>
+      <div class="placed home-placed">{students.slice(0, 10).map((s, i) => <StudentCard s={s} top={i === 0} />)}</div>
+    </div>
+  </section>
+
+  <section class="band bg-white" id="why">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Why Medha</span><h2>Everything you need for a successful learning journey</h2></div></div>
+      <div class="grid-3">
+        {facilities.map((f, i) => <div class="card" style="background:var(--bg)"><span class="ic"><Icon name={facIcons[i]} /></span><h3>{f.title}</h3><p>{f.text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="band bg-blue" id="trainers">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Our expert trainers</span><h2>Learn from industry experts</h2><p class="lede">Practical knowledge, real-time project experience and career guidance from trainers who have worked with leading companies.</p></div></div>
+      <div class="grid-3">
+        {trainers.map((t) => <div class="card trainer"><span class="code">{t.code}</span><h3>{t.title}</h3><p>{t.text}</p><ul class="mini-tags">{t.tags.map((x) => <li>{x}</li>)}</ul></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="band bg-white" id="journey">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">How it works</span><h2>From your first demo class to your offer letter</h2></div></div>
+      <ol class="journey">
+        <li class="step"><span class="step-n"><b>01</b></span><h3>Free demo class</h3><p>Meet the trainer, see the syllabus and pick the right course and batch.</p></li>
+        <li class="step"><span class="step-n"><b>02</b></span><h3>Hands-on training</h3><p>Small batches, live projects, assignments and case studies.</p></li>
+        <li class="step"><span class="step-n"><b>03</b></span><h3>Internship</h3><p>Work on real projects with mentors and earn a certificate.</p></li>
+        <li class="step"><span class="step-n"><b>04</b></span><h3>Placement</h3><p>Resume building, mock interviews and placement support until you are placed.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band bg-mint" id="stories">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Student stories</span><h2>Success stories from our students</h2></div></div>
+      <div class="grid-3">
+        {testimonials.map((t) => (
+          <figure class="quote"><blockquote>“{t.quote}”</blockquote>
+            <figcaption><Image class="avatar" src={img('students/' + t.photo)!} alt={t.name} width={92} height={92} fit="cover" position="top" /><div><b>{t.name}</b><span>{t.role}</span></div></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="band bg-white" id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="eyebrow">About Medha</span><h2>Built by people who care about student success</h2>
+          <p class="lede">Medha IT Technologies helps students, freshers and professionals build IT careers. Through practical learning, real-time projects, internships and expert mentorship, we bridge the gap between academic knowledge and industry requirements.</p></div>
+        <a class="btn btn-ghost" href={u('about-us/')}>Know more about us</a>
+      </div>
+      <div class="grid-2">
+        <div class="leader"><Image src={suresh} alt="G Suresh" width={220} height={220} fit="cover" position="top" /><div><span class="role">Founder &amp; Managing Director</span><h3>G Suresh</h3><p>A visionary leader guiding Medha with a strong commitment to practical learning, innovation and student career success.</p></div></div>
+        <div class="leader"><Image src={barath} alt="T S Barath" width={220} height={220} fit="cover" position="top" /><div><span class="role">Co-Founder &amp; Managing Director</span><h3>T S Barath</h3><p>A strategic operations leader focused on structured learning, student support, quality delivery and career development.</p></div></div>
+      </div>
+      <div class="card" style="margin-top:16px;background:var(--tint-blue);border:0">
+        <h3>Our mission</h3>
+        <p>Deliver world-class IT, SAP, Data Analytics, Artificial Intelligence, Cyber Security and Finance training through practical learning, live projects, internships and expert mentorship.</p>
+      </div>
+    </div>
+  </section>
+
+  <Faq />
+  <Enquire id="homeEnq" />
+</Base>

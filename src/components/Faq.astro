@@ -1,0 +1,16 @@
+---
+import { faqs, contact } from '../data/site';
+---
+<section class="band bg-blue" id="faq">
+  <div class="wrap faq-grid">
+    <div class="faq-side">
+      <span class="eyebrow">FAQ</span>
+      <h2>Have questions? We're here to help</h2>
+      <p class="lede">Our counsellors help with course selection, training details, internships and placement guidance.</p>
+      <div class="contact-card"><small>Call or WhatsApp any time</small><a href={`tel:${contact.phone}`}><b>{contact.phoneLabel}</b></a><a class="privacy" href={`mailto:${contact.email}`}>{contact.email}</a></div>
+    </div>
+    <div class="faq">
+      {faqs.map((f, i) => <details open={i === 0}><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </div>
+  </div>
+</section>

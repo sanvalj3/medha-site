@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CourseCard from '../components/CourseCard.astro';
+import CourseFilters from '../components/CourseFilters.astro';
+import Enquire from '../components/Enquire.astro';
+import Icon from '../components/Icon.astro';
+import { courses, trainingModes, allProgrammes } from '../data/site';
+import { u } from '../lib/url';
+const schema = [{ '@type': 'ItemList', name: 'Courses at Medha IT Technologies', itemListElement: courses.map((c, i) => ({ '@type': 'ListItem', position: i + 1, url: new URL(u(c.slug + '/'), Astro.site).href, name: c.title })) }];
+---
+<Base title="Courses" description="IT and SAP courses in Bengaluru: SAP, Java & Python Full Stack, AI, Data Science, Power BI, AWS & DevOps, Testing, Salesforce and Digital Marketing." crumbs={[{ label: 'Courses' }]} schema={schema}>
+  <PageHero title="Courses built for jobs" eyebrow="Our courses" crumbs={[{ label: 'Courses' }]}
+    lede="Industry-focused programs for students, freshers, non-IT candidates and working professionals, each with live projects, internship options and placement assistance." />
+
+  <section class="band bg-blue">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><h2>All programs</h2></div>
+        <CourseFilters target="allCourses" />
+      </div>
+      <div class="courses" id="allCourses">{courses.map((c) => <CourseCard c={c} />)}</div>
+    </div>
+  </section>
+
+  <section class="band bg-white">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Training modes</span><h2>Classroom, online, corporate or internship</h2></div></div>
+      <div class="grid-4">
+        {trainingModes.map((m) => <div class="card" style="background:var(--bg)"><span class="ic"><Icon name={m.icon} /></span><h3>{m.title}</h3><p>{m.text}</p><ul class="mini-tags">{m.tags.map((t) => <li>{t}</li>)}</ul></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="band bg-mint">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Also available</span><h2>More programs on request</h2><p class="lede">Ask our counsellors about any of these. We'll suggest the right course and batch for your background.</p></div></div>
+      <ul class="roles">{allProgrammes.map((p) => <li>{p}</li>)}</ul>
+    </div>
+  </section>
+
+  <Enquire id="coursesEnq" />
+</Base>

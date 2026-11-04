@@ -1,0 +1,10 @@
+---
+import { Image } from 'astro:assets';
+import { imgOr } from '../lib/images';
+const { src, alt, wide = false, eager = false } = Astro.props;
+const image = imgOr(src, 'brand/independence-day-placeholder.svg');
+const isSvg = image.format === 'svg';
+---
+{isSvg
+  ? <img src={image.src} alt={alt} width="1200" height="800" style="width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:inherit;background:#F3F7FD" loading={eager ? 'eager' : 'lazy'} />
+  : <Image src={image} alt={alt} widths={wide ? [480, 800, 1200] : [320, 600]} sizes={wide ? '(max-width: 960px) 92vw, 760px' : '(max-width: 640px) 92vw, 380px'} loading={eager ? 'eager' : 'lazy'} />}

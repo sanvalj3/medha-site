@@ -1,0 +1,20 @@
+---
+// The "book a free demo" fields. Used inside the popup and in the inline enquiry sections.
+// Any <form data-demo-form> is sent to WhatsApp by the script in Base.astro.
+import { demoCourses } from '../data/site';
+const { id = 'f', message = false, button = 'Book free demo class' } = Astro.props;
+---
+<div class="field"><label for={`${id}Name`}>Full name</label><input id={`${id}Name`} name="name" required autocomplete="name" placeholder="Your name" /></div>
+<div class="row2">
+  <div class="field"><label for={`${id}Phone`}>Mobile number</label><input id={`${id}Phone`} name="phone" type="tel" required autocomplete="tel" inputmode="tel" pattern="[0-9+ ()-]{10,}" placeholder="+91 98765 43210" /></div>
+  <div class="field"><label for={`${id}Email`}>Email</label><input id={`${id}Email`} name="email" type="email" required autocomplete="email" placeholder="you@example.com" /></div>
+</div>
+<div class="field"><label for={`${id}Course`}>Course</label>
+  <select id={`${id}Course`} name="course" required>
+    <option value="">Select a course</option>
+    {demoCourses.map((c) => <option>{c}</option>)}
+  </select>
+</div>
+{message && <div class="field"><label for={`${id}Msg`}>Message (optional)</label><textarea id={`${id}Msg`} name="message" rows="2" placeholder="Tell us about your goals"></textarea></div>}
+<button class="btn btn-primary btn-block" type="submit">{button}</button>
+<p class="privacy">We only use your details to contact you about your demo.</p>

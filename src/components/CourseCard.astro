@@ -1,0 +1,11 @@
+---
+import { u } from '../lib/url';
+import { courseBlurb, type Course } from '../data/site';
+const { c } = Astro.props as { c: Course };
+---
+<article class={`course c-${c.cat}`} data-cat={c.cat}>
+  <div class="course-top"><span class="code">{c.code}</span>{c.duration && <span class="dur">{c.duration}</span>}</div>
+  <h3><a href={u(c.slug + '/')}>{c.title}</a></h3>
+  <p>{courseBlurb[c.slug]}</p>
+  <div class="course-foot"><span>{c.highlight}</span><button class="link" type="button" data-demo={c.demo}>Free demo →</button></div>
+</article>

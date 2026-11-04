@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { u } from '../lib/url';
+import { contact, social } from '../data/site';
+import logo from '../assets/brand/medha-logo.png';
+const year = new Date().getFullYear();
+---
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <Image class="foot-logo" src={logo} alt="Medha IT Technologies" width={150} />
+        <p class="foot-about">A software training institute in {contact.city} helping students, freshers and professionals build IT careers through expert trainers, live projects, internships, certifications and placement assistance.</p>
+        <div class="socials">
+          {social.map((s) => <a href={s.href} target="_blank" rel="noopener" aria-label={s.name}><Icon name={s.name.toLowerCase()} /></a>)}
+        </div>
+      </div>
+      <div><h4>Quick links</h4><ul>
+        <li><a href={u('')}>Home</a></li><li><a href={u('about-us/')}>About us</a></li><li><a href={u('courses/')}>Courses</a></li>
+        <li><a href={u('internship/')}>Internship</a></li><li><a href={u('placements/')}>Placements</a></li><li><a href={u('events/')}>Events</a></li><li><a href={u('contact-us/')}>Contact us</a></li>
+      </ul></div>
+      <div><h4>Popular courses</h4><ul>
+        <li><a href={u('sap-all-modules-training/')}>SAP All Modules</a></li><li><a href={u('java-full-stack/')}>Java Full Stack</a></li>
+        <li><a href={u('python-full-stack-training/')}>Python Full Stack</a></li><li><a href={u('data-science-training/')}>Data Science</a></li>
+        <li><a href={u('aws-devops-training/')}>AWS &amp; DevOps</a></li><li><a href={u('power-bi-training/')}>Power BI</a></li>
+      </ul></div>
+      <div><h4>Student support</h4><ul>
+        <li><button class="link" style="color:inherit;font-weight:400;font-size:inherit" type="button" data-demo>Free demo class</button></li>
+        <li><a href={u('contact-us/')}>Career guidance</a></li><li><a href={u('internship/')}>Live projects</a></li><li><a href={u('internship/')}>Internship programs</a></li>
+        <li><a href={u('placements/')}>Resume building &amp; mock interviews</a></li><li><a href={u('placements/')}>Placement assistance</a></li>
+      </ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href={`tel:${contact.phone}`}>{contact.phoneLabel}</a></li>
+        <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+        <li><a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noopener">WhatsApp us</a></li>
+        <li>{contact.city}, Karnataka</li>
+      </ul></div>
+    </div>
+    <div class="foot-bottom"><span>© {year} Medha IT Technologies. All rights reserved.</span><span>{contact.website}</span></div>
+  </div>
+</footer>

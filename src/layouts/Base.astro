@@ -1,0 +1,248 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import DemoForm from '../components/DemoForm.astro';
+import { u } from '../lib/url';
+import { contact, social } from '../data/site';
+import mark from '../assets/brand/medha-logo-mark.png';
+import ogCard from '../assets/brand/og-card.png';
+import favSolid from '../assets/brand/favicon-solid.png';
+import appIcon from '../assets/brand/app-icon.png';
+import logo from '../assets/brand/medha-logo.png';
+import { getImage } from 'astro:assets';
+
+interface Crumb { label: string; href?: string }
+interface Props {
+  title: string; description: string; course?: string; autoDemo?: boolean;
+  type?: 'website' | 'article'; crumbs?: Crumb[]; schema?: Record<string, unknown>[]; published?: string;
+}
+const { title, description, course = '', autoDemo = false, type = 'website', crumbs, schema = [], published } = Astro.props;
+const fullTitle = title.includes('Medha') ? title : `${title} | Medha IT Technologies`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const abs = (p: string) => new URL(p, Astro.site).href;
+const favicon = await getImage({ src: favSolid, width: 48, height: 48, format: 'png' });
+const favicon192 = await getImage({ src: favSolid, width: 192, height: 192, format: 'png' });
+const touch = await getImage({ src: appIcon, width: 180, height: 180, format: 'png' });
+const ogImg = await getImage({ src: ogCard, width: 1200, height: 630, format: 'jpeg', quality: 85 });
+const logoImg = await getImage({ src: logo, width: 512, format: 'png' });
+const chatLogo = await getImage({ src: mark, width: 96, height: 96, format: 'png' });
+const chatCfg = { home: u(''), logo: chatLogo.src, whatsapp: contact.whatsapp, phone: contact.phone, phoneLabel: contact.phoneLabel, teaserDelay: 8000 };
+const home = abs(u(''));
+
+// Structured data (helps Google show rich results)
+const org = {
+  '@type': ['EducationalOrganization', 'LocalBusiness'], '@id': home + '#org', name: 'Medha IT Technologies',
+  alternateName: 'Medha Trainings', url: home, logo: abs(logoImg.src), image: abs(ogImg.src),
+  description: 'IT and SAP training institute in Marathahalli, Bengaluru with live projects, internships and placement assistance.',
+  telephone: contact.phone, email: contact.email, priceRange: '₹₹',
+  address: { '@type': 'PostalAddress', addressLocality: 'Marathahalli, Bengaluru', addressRegion: 'Karnataka', postalCode: '560037', addressCountry: 'IN' },
+  areaServed: ['Bengaluru', 'India'], sameAs: social.map((s) => s.href),
+  contactPoint: { '@type': 'ContactPoint', telephone: contact.phone, contactType: 'admissions', areaServed: 'IN', availableLanguage: ['English', 'Hindi', 'Telugu', 'Kannada'] },
+};
+const graph: Record<string, unknown>[] = [
+  org,
+  { '@type': 'WebSite', '@id': home + '#website', url: home, name: 'Medha IT Technologies', publisher: { '@id': home + '#org' }, inLanguage: 'en-IN' },
+  { '@type': 'WebPage', '@id': canonical, url: canonical, name: fullTitle, description, isPartOf: { '@id': home + '#website' }, inLanguage: 'en-IN' },
+];
+if (crumbs?.length) {
+  const items = [{ label: 'Home', href: '' }, ...crumbs];
+  graph.push({ '@type': 'BreadcrumbList', itemListElement: items.map((c, i) => ({
+    '@type': 'ListItem', position: i + 1, name: c.label, item: c.href !== undefined ? abs(u(c.href)) : canonical })) });
+}
+graph.push(...schema);
+---
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script is:inline>document.documentElement.classList.add('js');</script>
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href={canonical} />
+  <link rel="sitemap" href={u('sitemap-index.xml')} />
+  <meta name="theme-color" content="#13307F" />
+  <meta name="geo.region" content="IN-KA" />
+  <meta name="geo.placename" content="Marathahalli, Bengaluru" />
+  <link rel="icon" type="image/png" sizes="48x48" href={favicon.src} />
+  <link rel="icon" type="image/png" sizes="192x192" href={favicon192.src} />
+  <link rel="apple-touch-icon" href={touch.src} />
+  <meta property="og:type" content={type} />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:site_name" content="Medha IT Technologies" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={abs(ogImg.src)} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Medha IT Technologies: IT & SAP training with placements" />
+  {published && <meta property="article:published_time" content={published} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={abs(ogImg.src)} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" />
+  <link rel="stylesheet" href={u('chat/medha-chat.css')} media="print" onload="this.media='all'" />
+  <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
+</head>
+<body data-course={course} data-auto-demo={autoDemo ? '1' : undefined} data-wa={contact.whatsapp}>
+  <a class="skip" href="#main">Skip to content</a>
+  <Header />
+  <main id="main"><slot /></main>
+  <Footer />
+
+  <dialog class="demo" id="demoDlg" aria-labelledby="dlgTitle">
+    <div class="demo-grid" id="demoBody">
+      <form class="demo-form" data-demo-form>
+        <h2 id="dlgTitle" tabindex="-1" autofocus>Book your free demo</h2>
+        <p class="sub">Limited seats. Our counsellor will confirm your slot on WhatsApp.</p>
+        <DemoForm id="dlg" message />
+      </form>
+      <div class="demo-side">
+        <button class="x" type="button" data-close aria-label="Close">×</button>
+        <div><div class="big">Free</div><div style="font-weight:600;opacity:.9">demo class, no commitment</div></div>
+        <ul><li>Live projects</li><li>Expert mentors</li><li>Career support</li><li>Placement assistance</li></ul>
+      </div>
+    </div>
+    <div class="done" id="demoDone" hidden>
+      <button class="x x-dark" type="button" data-close aria-label="Close">×</button>
+      <h2>Almost done</h2>
+      <p>We opened WhatsApp with your booking details. Press send there to confirm your slot. If WhatsApp did not open, use the button below.</p>
+      <div class="cta-row">
+        <a class="btn btn-wa" id="waLink" href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noopener">Send on WhatsApp</a>
+        <button class="btn btn-ghost" type="button" data-close>Close</button>
+      </div>
+      <p class="privacy">Prefer a call? Ring us on {contact.phoneLabel}.</p>
+    </div>
+  </dialog>
+
+  <script is:inline define:vars={{ chatCfg }}>window.MEDHA_CHAT = chatCfg;</script>
+  <script is:inline src={u('chat/medha-chat.js')} defer></script>
+  <script>
+    const dlg = document.getElementById('demoDlg') as HTMLDialogElement;
+    const body = document.getElementById('demoBody')!;
+    const done = document.getElementById('demoDone')!;
+    const WA = document.body.dataset.wa || '917349475807';
+    let autoClose: number | undefined;
+    let touched = false;
+    dlg.addEventListener('input', () => { touched = true; });
+    dlg.addEventListener('pointerdown', () => { touched = true; });
+
+    function pick(sel: HTMLSelectElement | null, value: string) {
+      if (!sel || !value) return;
+      for (const o of Array.from(sel.options)) if (o.value === value || o.text === value) { sel.value = o.value; return; }
+    }
+    function openDemo(course?: string, showDone = false) {
+      body.hidden = showDone; done.hidden = !showDone;
+      pick(dlg.querySelector('select[name="course"]'), course || document.body.dataset.course || '');
+      touched = false;
+      if (!dlg.open) dlg.showModal();
+      clearTimeout(autoClose);
+    }
+    (window as any).openDemoPopup = (c?: string) => openDemo(c);
+    (window as any).openMedhaForm = () => openDemo();
+
+    document.addEventListener('click', (e) => {
+      const t = (e.target as HTMLElement).closest('[data-demo]');
+      if (t) { e.preventDefault(); openDemo(t.getAttribute('data-demo') || ''); return; }
+      if ((e.target as HTMLElement).closest('[data-close]')) dlg.close();
+    });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+
+    // Every demo form sends the booking to WhatsApp
+    document.querySelectorAll<HTMLFormElement>('form[data-demo-form]').forEach((form) => {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const f = new FormData(form);
+        const v = (k: string) => String(f.get(k) || '').trim();
+        const text = `*New Demo Booking*\n\n*Name:* ${v('name')}\n*Mobile:* ${v('phone')}\n*Email:* ${v('email')}\n*Course:* ${v('course')}` + (v('message') ? `\n*Message:* ${v('message')}` : '') + `\n*Page:* ${document.title}`;
+        const url = `https://api.whatsapp.com/send?phone=${WA}&text=${encodeURIComponent(text)}`;
+        (document.getElementById('waLink') as HTMLAnchorElement).href = url;
+        window.open(url, '_blank', 'noopener');
+        form.reset();
+        try { sessionStorage.setItem('medhaDemoSent', '1'); } catch {}
+        openDemo('', true);
+      });
+    });
+
+    // On course pages, pre-select that course in every enquiry form
+    document.querySelectorAll<HTMLSelectElement>('select[name="course"]').forEach((sel) => pick(sel, document.body.dataset.course || ''));
+
+    // ---- Motion: reveal on scroll, count-up stats, header shadow ----
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const head = document.querySelector('.site-head');
+    const onScroll = () => head?.classList.toggle('scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    if (!calm && 'IntersectionObserver' in window) {
+      const sel = '.sec-head, .course, .card, .person, .quote, .step, .batch, .leader, .event-card, .enquire, .faq details, .split > .photo, .contact-item, .form-card, .stats, .prose > figure, .two-img, .gallery, .facts-grid, .prog-grid';
+      const items = Array.from(document.querySelectorAll<HTMLElement>(sel)).filter((el) => !el.closest('dialog, .mega, .hero, .reveal'));
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      items.forEach((el) => {
+        const sibs = Array.from(el.parentElement?.children || []);
+        el.style.setProperty('--d', (Math.min(sibs.indexOf(el), 5) * 70) + 'ms');
+        el.classList.add('reveal');
+        io.observe(el);
+      });
+
+      // Stats count up from 0 the first time they appear
+      const statIO = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          statIO.unobserve(e.target);
+          const node = e.target.firstChild as Text;
+          const m = (node?.textContent || '').match(/^(\d+(?:\.\d+)?)(.*)$/);
+          if (!m) return;
+          const end = parseFloat(m[1]); const rest = m[2]; const t0 = performance.now(); const dur = 1400;
+          const tick = (t: number) => {
+            const p = Math.min(1, (t - t0) / dur); const ease = 1 - Math.pow(1 - p, 3);
+            node.textContent = Math.round(end * ease) + rest;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+      }, { threshold: 0.6 });
+      document.querySelectorAll('.stat b').forEach((b) => statIO.observe(b));
+    }
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mainMenu');
+    menuBtn?.addEventListener('click', () => {
+      const open = menu!.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(open));
+    });
+
+    // Course filter chips
+    document.querySelectorAll<HTMLElement>('[data-filter-group]').forEach((group) => {
+      const grid = document.getElementById(group.dataset.filterGroup!)!;
+      group.addEventListener('click', (e) => {
+        const chip = (e.target as HTMLElement).closest<HTMLElement>('.chip');
+        if (!chip) return;
+        group.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        const f = chip.dataset.f;
+        grid.querySelectorAll<HTMLElement>('[data-cat]').forEach((k) => { k.hidden = !(f === 'all' || k.dataset.cat === f); });
+      });
+    });
+
+    // Home page: the demo popup opens after 5 s, then every 60 s, and closes itself after 30 s if untouched
+    if (document.body.dataset.autoDemo) {
+      const show = () => {
+        let sent = false;
+        try { sent = sessionStorage.getItem('medhaDemoSent') === '1'; } catch {}
+        if (sent || dlg.open || document.querySelector('.mchat.is-open')) return;
+        openDemo();
+        autoClose = window.setTimeout(() => { if (!touched) dlg.close(); }, 30000);
+      };
+      setTimeout(() => { show(); setInterval(show, 60000); }, 5000);
+    }
+  </script>
+</body>
+</html>

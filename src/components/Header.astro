@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { u } from '../lib/url';
+import { contact, nav, courses, categories } from '../data/site';
+import mark from '../assets/brand/medha-logo-mark.png';
+
+const path = Astro.url.pathname;
+const base = u('');
+function isCurrent(href: string) {
+  const full = u(href);
+  if (href === '') return path === base || path === base.replace(/\/$/, '');
+  if (href === 'courses/') return path.startsWith(full) || courses.some((c) => path.startsWith(u(c.slug + '/')));
+  return path.startsWith(full);
+}
+const groups = categories.map((c) => ({ ...c, items: courses.filter((x) => x.cat === c.id) }));
+// three columns: SAP + Business, Development, Data & AI + Cloud & Testing
+const cols = [
+  [groups[0], groups[4]],
+  [groups[1]],
+  [groups[2], groups[3]],
+];
+---
+<div class="topbar">
+  <div class="wrap">
+    <div class="topbar-l">
+      <a href={`tel:${contact.phone}`}><Icon name="phone" />{contact.phoneLabel}</a>
+      <a href={`mailto:${contact.email}`}><Icon name="mail" />{contact.email}</a>
+    </div>
+    <div class="topbar-r">
+      <span><Icon name="mappin" />{contact.city}</span>
+      <a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noopener"><Icon name="whatsapp" />WhatsApp us</a>
+    </div>
+  </div>
+</div>
+<header class="site-head">
+  <div class="wrap nav">
+    <a class="brand" href={u('')} aria-label="Medha IT Technologies home">
+      <span class="brand-mark"><Image src={mark} alt="" width={40} height={40} loading="eager" /></span>
+      <span class="brand-name"><b>Medha</b><span>IT TECHNOLOGIES</span></span>
+    </a>
+    <ul class="menu" id="mainMenu">
+      {nav.map((n) => (
+        <li class={n.mega ? 'has-mega' : undefined}>
+          <a href={u(n.href)} aria-current={isCurrent(n.href) ? 'page' : undefined}>
+            {n.label}{n.mega && <Icon name="caret" class="caret" />}
+          </a>
+          {n.mega && (
+            <div class="mega">
+              <div class="mega-inner">
+                {cols.map((col) => (
+                  <div>
+                    {col.map((g) => (
+                      <div style="margin-bottom:12px">
+                        <h4>{g.label}</h4>
+                        <ul>{g.items.map((c) => <li><a href={u(c.slug + '/')}>{c.title.replace(/ Training$/, '')}</a></li>)}</ul>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+                <div class="all"><span>14 career-focused programs</span><a class="link" href={u('courses/')}>View all courses →</a></div>
+              </div>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+    <div class="nav-cta">
+      <button class="btn btn-primary btn-sm" type="button" data-demo>Book free demo</button>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mainMenu"><Icon name="menu" /></button>
+    </div>
+  </div>
+</header>

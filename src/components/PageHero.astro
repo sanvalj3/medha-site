@@ -1,0 +1,16 @@
+---
+import { u } from '../lib/url';
+const { title, eyebrow, lede, crumbs = [] } = Astro.props as { title: string; eyebrow?: string; lede?: string; crumbs?: { label: string; href?: string }[] };
+---
+<section class="page-hero swoosh-bg">
+  <div class="wrap">
+    <ol class="crumbs" aria-label="Breadcrumb">
+      <li><a href={u('')}>Home</a></li>
+      {crumbs.map((c) => <li>{c.href ? <a href={u(c.href)}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>)}
+    </ol>
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <h1>{title}</h1>
+    {lede && <p class="lede">{lede}</p>}
+    <slot />
+  </div>
+</section>

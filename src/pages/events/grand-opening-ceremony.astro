@@ -1,0 +1,95 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import EventImg from '../../components/EventImg.astro';
+import EventAside from '../../components/EventAside.astro';
+import Enquire from '../../components/Enquire.astro';
+import { u } from '../../lib/url';
+import { Image } from 'astro:assets';
+import { img } from '../../lib/images';
+const gallery = [18, 20, 23, 25, 26, 10, 11, 14].map((n) => img(`events/opening-${n}.jpeg`)!);
+const artUrl = new URL(u('events/grand-opening-ceremony/'), Astro.site).href;
+const schema = [{ '@type': 'Article', headline: "Grand Opening Ceremony of Medha IT Technologies", datePublished: '2026-06-10', dateModified: '2026-06-10', mainEntityOfPage: artUrl,
+  author: { '@type': 'Organization', name: 'Medha IT Technologies' }, publisher: { '@type': 'Organization', name: 'Medha IT Technologies' } }];
+---
+<Base title="Grand Opening Ceremony" description="Grand Opening Ceremony of Medha IT Technologies, Marathahalli, Bengaluru on 10 June 2026: ribbon cutting, lamp lighting, guest speeches and course launch." type="article" published="2026-06-10" crumbs={[{ label: 'Events', href: 'events/' }, { label: 'Grand Opening Ceremony' }]} schema={schema}>
+  <PageHero title="Grand Opening Ceremony of Medha IT Technologies" eyebrow="Institute event" crumbs={[{ label: 'Events', href: 'events/' }, { label: 'Grand Opening Ceremony' }]}>
+    <div class="meta"><time datetime="2026-06-10">10 June 2026</time><span>Medha IT Technologies</span><span>8 min read</span></div>
+  </PageHero>
+
+  <section class="band bg-white">
+    <div class="wrap course-layout">
+      <article class="prose">
+        <figure><EventImg src="events/opening-2.jpeg" alt="Decorated entrance of Medha IT Technologies on opening day" wide eager /></figure>
+        <h2>Introduction</h2>
+        <p>The <b>Grand Opening Ceremony of Medha IT Technologies</b> marked the beginning of a professional learning journey for students, freshers, job seekers, working professionals and career aspirants. It was the official launch of an institute focused on practical training, career guidance, placement assistance, internships and industry-ready skill development.</p>
+        <p>In today's job market, learners need more than classroom theory. They need real-time project exposure, interview confidence, resume preparation, communication skills and guidance from experienced mentors. Medha IT Technologies was started to bridge the gap between education and employment.</p>
+
+        <h2>About Medha IT Technologies</h2>
+        <p>Medha IT Technologies is a professional training and placement support institute offering career-focused programs in SAP, software development, Power BI, Python, Java, data analytics, cyber security, accounting, finance, R2R, P2P, O2C and internship-based learning.</p>
+        <p>The institute supports college students, fresh graduates, non-IT candidates, experienced professionals and anyone looking for a career change, with a focus on practical learning, structured course delivery, interview preparation and building professional confidence.</p>
+        <figure><EventImg src="events/opening-6.jpeg" alt="Learning space prepared for the inauguration" wide /><figcaption>A professional learning space prepared for the inauguration ceremony.</figcaption></figure>
+
+        <h2>Why Medha IT Technologies was started</h2>
+        <p>Many candidates complete their education but struggle in interviews because they lack real-time examples, project explanation, resume presentation and confidence. The institute was created to solve this through structured training and career-focused guidance. Every course is planned with practical examples, assignments, case studies, interview questions, live demonstrations and placement support.</p>
+
+        <h2>Vision and mission</h2>
+        <p>The vision of Medha IT Technologies is to become a trusted career development institute where learners gain industry-ready knowledge and confidence. The mission is to provide practical training, live project exposure, interview preparation, resume support and placement assistance to every learner.</p>
+        <div class="facts-grid">
+          <div><b>Opening date</b><span>Official opening ceremony held on 10 June 2026.</span></div>
+          <div><b>Venue</b><span>Medha IT Technologies, Marathahalli, Bangalore.</span></div>
+          <div><b>Industry experts</b><span>Experienced trainers and career mentors.</span></div>
+          <div><b>Placement support</b><span>Mock interviews, resume guidance and job assistance.</span></div>
+        </div>
+
+        <h2>Ceremony overview</h2>
+        <p>The opening ceremony included ribbon cutting, traditional lamp lighting, the chief guest's speech, the managing director's address, faculty introductions, student and parent interaction, an institute tour, the course launch and registration support.</p>
+        <h3>Ribbon cutting ceremony</h3>
+        <p>The ribbon cutting represented the official launch of Medha IT Technologies, a proud moment that opened new opportunities for students and professionals who want to build better careers through practical learning.</p>
+        <h3>Traditional lamp lighting</h3>
+        <p>The lamp lighting reflected knowledge, wisdom, positivity and new beginnings. For an educational institute this moment carries special meaning, because education is the light that guides learners toward confidence and success.</p>
+        <figure><EventImg src="events/opening-5.jpeg" alt="Traditional lamp lighting at the inauguration" wide /><figcaption>Traditional inauguration moments representing knowledge and success.</figcaption></figure>
+        <h3>Chief guest welcome speech</h3>
+        <p>The chief guest motivated students to focus on practical learning, communication skills, interview preparation and continuous career development, highlighting the importance of industry-ready skills in today's competitive job market.</p>
+        <div class="two-img">
+          <EventImg src="events/opening-21.jpeg" alt="Chief guest at the opening ceremony" />
+          <EventImg src="events/opening-22.jpeg" alt="Chief guests at the opening ceremony" />
+        </div>
+        <p class="privacy" style="margin-top:-6px">Our honoured chief guests gracing the Grand Opening Ceremony.</p>
+        <h3>Managing Director's address</h3>
+        <p>The Managing Director explained the purpose of Medha IT Technologies, its training model, student-first approach, placement vision and long-term plan to support learners, with a focus on trust, quality, discipline and career growth.</p>
+        <h3>Faculty introduction</h3>
+        <p>Faculty members were introduced to students and parents. Trainers shared their expertise, course approach, practical teaching methods and the support students can expect throughout their training.</p>
+        <h3>Infrastructure showcase</h3>
+        <p>The institute tour showcased classrooms, counselling areas, practical training space, discussion rooms and career support facilities, designed to provide a professional and comfortable learning environment.</p>
+        <div class="two-img">
+          <EventImg src="events/opening-8.jpeg" alt="Classroom at Medha IT Technologies" />
+          <EventImg src="events/opening-9.jpeg" alt="Learning area at Medha IT Technologies" />
+        </div>
+
+        <h2>Courses offered</h2>
+        <p>Career-focused training programs designed around current market requirements and hiring trends.</p>
+        <div class="prog-grid">
+          <div><b>SAP programs</b><ul><li>SAP FICO</li><li>SAP MM</li><li>SAP SD</li><li>SAP HCM</li></ul></div>
+          <div><b>Software programs</b><ul><li>Python</li><li>Java</li><li>Frontend development</li><li>Live projects</li></ul></div>
+          <div><b>Analytics programs</b><ul><li>Power BI</li><li>Data analytics</li><li>Excel reporting</li><li>SQL basics</li></ul></div>
+          <div><b>Accounting programs</b><ul><li>Accounting and finance</li><li>Record to Report</li><li>Procure to Pay</li><li>Order to Cash</li></ul></div>
+        </div>
+        <blockquote>Every great institution begins with one inspiring step. The Grand Opening Ceremony of Medha IT Technologies marks the beginning of countless successful careers.</blockquote>
+
+        <h2>Placement assistance</h2>
+        <p>Placement assistance includes resume building, job profile optimisation, mock interviews, HR round preparation, technical interview guidance and job opportunity updates, so students are confident and interview-ready.</p>
+
+        <h2>Photo gallery</h2>
+        <div class="gallery">{gallery.map((g) => <Image src={g} alt="Moment from the opening ceremony" width={360} height={360} fit="cover" />)}</div>
+
+        <h2>Vote of thanks</h2>
+        <p>Medha IT Technologies sincerely thanks all guests, parents, students, faculty members, the organising team and well-wishers who supported the launch of the institute.</p>
+        <h2>Conclusion</h2>
+        <p>The Grand Opening Ceremony was not just an inauguration. It was the beginning of a mission to empower students with practical skills, confidence, career guidance and placement support.</p>
+      </article>
+      <EventAside current="grand-opening-ceremony" />
+    </div>
+  </section>
+  <Enquire id="evEnq" />
+</Base>

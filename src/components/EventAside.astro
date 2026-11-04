@@ -1,0 +1,23 @@
+---
+import { u } from '../lib/url';
+import { events } from '../data/events';
+import { contact } from '../data/site';
+const { current } = Astro.props;
+---
+<aside class="aside">
+  <div class="card">
+    <h3>Recent posts</h3>
+    <ul class="ticks" style="gap:8px">{events.filter((e) => e.slug !== current).map((e) => <li><a href={u(`events/${e.slug}/`)}>{e.short}</a></li>)}</ul>
+  </div>
+  <div class="card">
+    <h3>Upcoming batches</h3>
+    <ul style="list-style:none;padding:0;display:grid;gap:8px;font-size:.92rem">
+      {['SAP FICO', 'Power BI', 'Python', 'R2R, P2P & O2C'].map((b) => <li style="display:flex;justify-content:space-between;gap:10px"><span>{b}</span><span class="badge">New</span></li>)}
+    </ul>
+    <button class="btn btn-primary btn-block btn-sm" type="button" data-demo>Enquire now</button>
+  </div>
+  <div class="card" style="background:var(--tint-teal);border:0">
+    <h3>About the author</h3>
+    <p><b>Medha IT Technologies</b> is a training and placement support institute in {contact.city}, focused on practical learning, internships, mock interviews, resume support and career development.</p>
+  </div>
+</aside>

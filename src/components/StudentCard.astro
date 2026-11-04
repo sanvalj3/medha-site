@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets';
+import { img } from '../lib/images';
+const { s, top = false } = Astro.props;
+const photo = s.photo ? img('students/' + s.photo) : undefined;
+const initials = s.name.split(/\s+/).filter((w: string) => /^[A-Za-z]{2,}/.test(w)).slice(0, 2).map((w: string) => w[0]).join('');
+---
+<div class={top ? 'person top' : 'person'}>
+  {photo
+    ? <Image class="avatar" src={photo} alt={`${s.name}, ${s.role} at ${s.company}`} width={112} height={112} fit="cover" position={s.pos || "top"} />
+    : <span class="avatar avatar-ph" aria-hidden="true">{initials}</span>}
+  <span class="lpa">{s.lpa}<small>LPA</small></span>
+  <div><span class="co">{s.company}</span><h3>{s.name}</h3><p>{s.role}</p></div>
+</div>

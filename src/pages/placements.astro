@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import StudentCard from '../components/StudentCard.astro';
+import Enquire from '../components/Enquire.astro';
+import { Image } from 'astro:assets';
+import { img } from '../lib/images';
+import { students, testimonials } from '../data/site';
+const companies = [...new Set(students.map((s) => s.company))];
+---
+<Base title="Placements" description="Placed students of Medha IT Technologies at Philips, PwC, HSBC, Honeywell, Deloitte, KPMG, Accenture, Genpact and more, with packages up to 32 LPA." crumbs={[{ label: 'Placements' }]}>
+  <PageHero title="Our placed student professionals" eyebrow="Placements" crumbs={[{ label: 'Placements' }]}
+    lede="Empowering careers through professional training, internship guidance, interview preparation and placement support. Meet our students placed in reputed organisations." />
+
+  <section class="band bg-navy">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Placed students</span><h2>Our success stories</h2><p class="lede">Packages in LPA (lakhs per annum), as reported by our placed students.</p></div></div>
+      <div class="placed">{students.map((s, i) => <StudentCard s={s} top={i === 0} />)}</div>
+    </div>
+  </section>
+
+  <section class="band bg-white">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Hiring companies</span><h2>Where our students work</h2></div></div>
+      <ul class="roles">{companies.map((c) => <li>{c}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="band bg-blue">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Placement support</span><h2>How we prepare you</h2></div></div>
+      <div class="grid-4">
+        <div class="card"><h3>Resume building</h3><p>A professional resume and job profile that highlights your projects and skills.</p></div>
+        <div class="card"><h3>Mock interviews</h3><p>Technical and HR mock interviews with industry experts, with feedback.</p></div>
+        <div class="card"><h3>Soft skills</h3><p>Communication, presentation and interview confidence training.</p></div>
+        <div class="card"><h3>Job opportunities</h3><p>Regular job updates, referrals and placement drives until you are placed.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band bg-mint">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Student stories</span><h2>In their words</h2></div></div>
+      <div class="grid-3">
+        {testimonials.map((t) => (
+          <figure class="quote"><blockquote>“{t.quote}”</blockquote>
+            <figcaption><Image class="avatar" src={img('students/' + t.photo)!} alt={t.name} width={92} height={92} fit="cover" position="top" /><div><b>{t.name}</b><span>{t.role}</span></div></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Enquire id="placeEnq" title="Be our next success story" />
+</Base>

@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import DemoForm from '../components/DemoForm.astro';
+import Icon from '../components/Icon.astro';
+import { contact, social } from '../data/site';
+const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.mapQuery)}`;
+---
+<Base title="Contact Us" description="Contact Medha IT Technologies, Marathahalli, Bengaluru. Call or WhatsApp +91 73494 75807 for course details, fees, batch timings and a free demo class." crumbs={[{ label: 'Contact us' }]} schema={[{ '@type': 'ContactPage', name: 'Contact Medha IT Technologies' }]}>
+  <PageHero title="Contact Medha IT Technologies" eyebrow="Contact us" crumbs={[{ label: 'Contact us' }]}
+    lede="Talk to our counsellors about courses, fees, batch timings, internships and placements." />
+
+  <section class="band bg-white">
+    <div class="wrap contact-grid">
+      <div class="contact-list">
+        <a class="contact-item" href={`tel:${contact.phone}`}><span class="ic"><Icon name="phone" /></span><span><small>Call us</small><b>{contact.phoneLabel}</b></span></a>
+        <a class="contact-item" href={`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent('Hello Medha IT Technologies, I would like to know more about your courses.')}`} target="_blank" rel="noopener"><span class="ic" style="background:#E3F6EA;color:#1FAF55"><Icon name="whatsapp" /></span><span><small>WhatsApp</small><b>Chat with a counsellor</b></span></a>
+        <a class="contact-item" href={`mailto:${contact.email}`}><span class="ic"><Icon name="mail" /></span><span><small>Email</small><b>{contact.email}</b></span></a>
+        <a class="contact-item" href={mapUrl} target="_blank" rel="noopener"><span class="ic"><Icon name="mappin" /></span><span><small>Visit us</small><b>{contact.city}, Karnataka</b><span class="privacy" style="display:block">Open in Google Maps →</span></span></a>
+        <div class="contact-item" style="flex-wrap:wrap"><span><small>Follow us</small></span>
+          <div class="socials" style="margin:0">{social.map((s) => <a href={s.href} target="_blank" rel="noopener" aria-label={s.name} style="background:var(--navy)"><Icon name={s.name.toLowerCase()} /></a>)}</div>
+        </div>
+      </div>
+      <form class="form-card" data-demo-form style="border:1px solid var(--line)">
+        <h2 style="font-size:1.6rem">Send an enquiry</h2>
+        <p class="privacy" style="margin-top:-4px">Your enquiry opens in WhatsApp so our team can reply quickly.</p>
+        <DemoForm id="contact" message button="Send enquiry" />
+      </form>
+    </div>
+  </section>
+
+  <section class="band bg-blue" style="padding-top:0;background:#FFFFFF">
+    <div class="wrap">
+      <div style="border-radius:20px;overflow:hidden;border:1px solid var(--line);height:clamp(280px,38vw,440px);background:var(--surface-2)">
+        <iframe title="Medha IT Technologies on Google Maps" src={`https://maps.google.com/maps?q=${encodeURIComponent('Marathahalli, Bengaluru, Karnataka, India')}&t=m&z=13&output=embed`} width="100%" height="100%" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+</Base>
