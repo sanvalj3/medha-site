@@ -101,7 +101,6 @@ export const students = [
   { name: 'Sainath Reddy', role: 'R2R Ops Associate', company: 'Deloitte', lpa: '5.5', photo: 'SAINATH-REDDY.jpeg' },
   { name: 'Kandukuri Santhosh Kumar', role: 'Senior Associate', company: 'Genpact', lpa: '4.9', photo: 'Kandukuri-Santhosh-Kumar.jpeg' },
   { name: 'Vinod Kumar', role: 'AP Executive', company: 'Adecco', lpa: '4.59', photo: 'Vinod-Kumar.jpeg' },
-  { name: 'G Kalpana', role: 'Senior Associate', company: 'Geodis India Pvt Ltd', lpa: '4.42', photo: null },
   { name: 'Vasala Pavan Kumar', role: 'Senior Process Associate', company: 'Mphasis Ltd', lpa: '4.2', photo: 'Vasala-Pavan-Kumar.jpeg' },
   { name: 'Syed Mohammad Aleem', role: 'Senior Process Associate', company: 'Alorica', lpa: '3', photo: 'Syed-Mohammad-Aleem.jpeg' },
   { name: 'T Devipriya', role: 'R2R Ops Analyst', company: 'Moder', lpa: '2.75', photo: 'T-Devipriya.jpeg' },
