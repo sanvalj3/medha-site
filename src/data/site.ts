@@ -12,6 +12,14 @@ export const contact = {
   city: 'Marathahalli, Bengaluru',
   address: 'Medha IT Technologies, Marathahalli, Bengaluru, Karnataka, India',
   mapQuery: 'Medha IT Technologies Marathahalli Bengaluru',
+  street: 'SGR Dental College Rd, opp. Aaspire Heights Apartment, Vivekananda Layout, Chandra Layout',
+  landmark: 'Near Mojo Pizza',
+  postalCode: '560037',
+  // Exact Google Maps listing of the institute
+  geo: { lat: 12.9496399, lng: 77.7020559 },
+  mapLink: 'https://maps.app.goo.gl/xXZkryPdVHaG14AZ6',
+  directions: 'https://www.google.com/maps/dir/?api=1&destination=12.9496399,77.7020559',
+  mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1500!2d77.7020559!3d12.9496399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae130078da77af%3A0x48e9dcff50ad07b9!2sMedha%20IT%20Technologies!5e0!3m2!1sen!2sin!4v1762430000000!5m2!1sen!2sin',
 };
 
 export const social = [

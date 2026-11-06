@@ -34,7 +34,7 @@ const year = new Date().getFullYear();
         <li><a href={`tel:${contact.phone}`}>{contact.phoneLabel}</a></li>
         <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
         <li><a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noopener">WhatsApp us</a></li>
-        <li>{contact.city}, Karnataka</li>
+        <li><a href={contact.mapLink} target="_blank" rel="noopener">{contact.city}, Karnataka</a></li>
       </ul></div>
     </div>
     <div class="foot-bottom"><span>© {year} Medha IT Technologies. All rights reserved.</span><span>{contact.website}</span></div>

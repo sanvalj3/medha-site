@@ -28,7 +28,7 @@ const cols = [
       <a href={`mailto:${contact.email}`}><Icon name="mail" />{contact.email}</a>
     </div>
     <div class="topbar-r">
-      <span><Icon name="mappin" />{contact.city}</span>
+      <a href={contact.mapLink} target="_blank" rel="noopener"><Icon name="mappin" />{contact.city}</a>
       <a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noopener"><Icon name="whatsapp" />WhatsApp us</a>
     </div>
   </div>

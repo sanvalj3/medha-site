@@ -36,7 +36,8 @@ const org = {
   alternateName: 'Medha Trainings', url: home, logo: abs(logoImg.src), image: abs(ogImg.src),
   description: 'IT and SAP training institute in Marathahalli, Bengaluru with live projects, internships and placement assistance.',
   telephone: contact.phone, email: contact.email, priceRange: '₹₹',
-  address: { '@type': 'PostalAddress', addressLocality: 'Marathahalli, Bengaluru', addressRegion: 'Karnataka', postalCode: '560037', addressCountry: 'IN' },
+  address: { '@type': 'PostalAddress', streetAddress: contact.street, addressLocality: 'Marathahalli, Bengaluru', addressRegion: 'Karnataka', postalCode: contact.postalCode, addressCountry: 'IN' },
+  geo: { '@type': 'GeoCoordinates', latitude: contact.geo.lat, longitude: contact.geo.lng }, hasMap: contact.mapLink,
   areaServed: ['Bengaluru', 'India'], sameAs: social.map((s) => s.href),
   contactPoint: { '@type': 'ContactPoint', telephone: contact.phone, contactType: 'admissions', areaServed: 'IN', availableLanguage: ['English', 'Hindi', 'Telugu', 'Kannada'] },
 };
@@ -66,6 +67,8 @@ graph.push(...schema);
   <meta name="theme-color" content="#13307F" />
   <meta name="geo.region" content="IN-KA" />
   <meta name="geo.placename" content="Marathahalli, Bengaluru" />
+  <meta name="geo.position" content={`${contact.geo.lat};${contact.geo.lng}`} />
+  <meta name="ICBM" content={`${contact.geo.lat}, ${contact.geo.lng}`} />
   <link rel="icon" type="image/png" sizes="48x48" href={favicon.src} />
   <link rel="icon" type="image/png" sizes="192x192" href={favicon192.src} />
   <link rel="apple-touch-icon" href={touch.src} />
