@@ -355,22 +355,33 @@ ul,ol{margin:0}
 .foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:40px;padding-top:20px;border-top:1px solid #22336B;font-size:.82rem}
 
 /* Demo dialog */
-dialog.demo{border:0;padding:0;border-radius:22px;background:#FFFFFF;color:var(--ink);width:min(880px,calc(100vw - 32px));max-height:calc(100dvh - 32px);box-shadow:var(--shadow-lg);overflow:auto}
+dialog.demo{border:0;padding:0;border-radius:22px;background:#FFFFFF;color:var(--ink);width:min(988px,calc(100vw - 24px));max-height:calc(100dvh - 24px);box-shadow:var(--shadow-lg);overflow:auto}
 dialog.demo::backdrop{background:rgba(8,16,48,.55);backdrop-filter:blur(3px)}
 dialog.demo[open]{animation:pop .22s ease}
 @keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
-.demo-grid{display:grid;grid-template-columns:1.25fr .75fr}
-.demo-form{padding:32px;display:grid;gap:13px}
-.demo-form h2{font-size:1.8rem}
+.demo-grid{display:grid;grid-template-columns:1.4fr .6fr}
+.demo-grid[hidden],.done[hidden]{display:none}
+/* the popup is designed at 760px and scaled up 1.3x (1.15x on phones, so it still fits) */
+dialog.demo{--dz:1.3}
+.demo-grid,.done{zoom:var(--dz)}
+.demo-form{padding:24px 28px;display:grid;gap:10px}
+.demo-form h2{font-size:1.5rem}
+.demo-form h2:focus{outline:none}
+.demo-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.x-form{display:none;position:static;flex:none;width:36px;height:36px}
+.demo-form .field{gap:4px}
+.demo-form .field input,.demo-form .field select,.demo-form .field textarea{padding:9px 12px;font-size:.92rem}
+.demo-form .field textarea{min-height:56px}
+.demo-form .btn-block{margin-top:4px}
 .demo-form .sub{color:var(--muted);font-size:.92rem;margin-top:-6px}
-.demo-side{background:var(--grad);color:#FFFFFF;padding:32px;display:grid;align-content:space-between;gap:24px;position:relative}
-.demo-side .big{font-family:var(--f-display);font-size:3.4rem;line-height:1}
+.demo-side{background:var(--grad);color:#FFFFFF;padding:28px 24px;display:grid;align-content:space-between;gap:24px;position:relative}
+.demo-side .big{font-family:var(--f-display);font-size:2.8rem;line-height:1}
 .demo-side ul{list-style:none;padding:0;display:grid;gap:10px;font-weight:600;font-size:.95rem}
 .demo-side li{display:flex;gap:10px;align-items:center}
 .demo-side li::before{content:"";width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.25) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/11px no-repeat;flex:none}
 .x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.22);color:#FFFFFF;font-size:1.4rem;cursor:pointer;line-height:1;z-index:2}
 .x-dark{background:var(--surface-2);color:var(--ink)}
-.done{display:grid;gap:14px;padding:36px;position:relative}
+.done{display:grid;gap:14px;padding:28px;position:relative}
 .done h2{font-size:1.7rem}
 .done p{color:var(--ink-2)}
 
@@ -405,9 +416,9 @@ dialog.demo[open]{animation:pop .22s ease}
   .journey{grid-template-columns:repeat(2,1fr);gap:32px 0}
   .gallery{grid-template-columns:repeat(3,1fr)}
   .demo-grid{grid-template-columns:1fr}
-  .demo-side{order:-1;padding:22px 24px;grid-template-columns:auto 1fr;align-items:center}
-  .demo-side ul{grid-template-columns:1fr 1fr;gap:6px 12px;font-size:.82rem}
-  .demo-side .big{font-size:2.4rem}
+  .demo-side{display:none}
+  .x-form{display:grid;place-items:center}
+  dialog.demo{width:min(676px,calc(100vw - 24px))}
 }
 @media (max-width:640px){
   :root{--head-h:64px}
@@ -426,14 +437,24 @@ dialog.demo[open]{animation:pop .22s ease}
   .home-placed .person:nth-child(n+9){display:none}
   .journey{grid-template-columns:1fr}
   .leader{grid-template-columns:76px 1fr}
+  .pill{flex-wrap:nowrap;border-radius:16px;font-size:.76rem;line-height:1.35;padding:5px 12px 5px 5px}
+  .pill i{flex:none;white-space:nowrap;font-size:.64rem;padding:3px 8px}
+  .pill-city{display:none}
   .leader img{width:76px;height:76px}
   .foot-grid{grid-template-columns:1fr 1fr}
   .float.tr{display:none}
   .float.bl{left:-10px;max-width:calc(100% - 10px)}
   .hero-visual{padding-left:14px}
-  .demo-form{padding:22px}
+  dialog.demo{--dz:1.15}
+  .demo-form{padding:0 16px 16px;gap:8px}
+  .demo-head{position:sticky;top:0;z-index:2;background:#FFFFFF;padding:16px 0 6px;margin-bottom:-2px}
+  .demo-form h2{font-size:1.3rem}
+  .demo-form .sub{font-size:.85rem;margin-top:0}
+  .demo-form .field label{font-size:.76rem}
+  .demo-form .field textarea{min-height:44px}
   .row2{grid-template-columns:1fr}
-  .demo-side{display:none}
+  .done{padding:22px 18px}
+  .done h2{font-size:1.4rem}
   .gallery{grid-template-columns:repeat(2,1fr)}
   .two-img{grid-template-columns:1fr}
   .menu.open .mega-inner{grid-template-columns:1fr}

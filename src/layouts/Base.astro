@@ -99,7 +99,10 @@ graph.push(...schema);
   <dialog class="demo" id="demoDlg" aria-labelledby="dlgTitle">
     <div class="demo-grid" id="demoBody">
       <form class="demo-form" data-demo-form>
-        <h2 id="dlgTitle" tabindex="-1" autofocus>Book your free demo</h2>
+        <div class="demo-head">
+          <h2 id="dlgTitle" tabindex="-1" autofocus>Book your free demo</h2>
+          <button class="x x-dark x-form" type="button" data-close aria-label="Close">×</button>
+        </div>
         <p class="sub">Limited seats. Our counsellor will confirm your slot on WhatsApp.</p>
         <DemoForm id="dlg" message />
       </form>
